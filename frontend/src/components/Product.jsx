@@ -1,5 +1,7 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Rating from "./Rating";
+import PropTypes from "prop-types";
 
 const Product = ({ product }) => {
   return (
@@ -10,15 +12,32 @@ const Product = ({ product }) => {
 
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
+          <Card.Title as="div" className="product-title">
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>
+        <Card.Text as="div">
+          <Rating
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
+          />
+        </Card.Text>
 
         <Card.Text as="h3">${product.price}</Card.Text>
       </Card.Body>
     </Card>
   );
+};
+
+Product.propTypes = {
+  product: PropTypes.shape({
+    _id: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    numReviews: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default Product;
