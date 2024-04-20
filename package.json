@@ -1,0 +1,15 @@
+{
+  "name": "tachshop",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "ecommerce site",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "author": "Mohammad Harish",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
