@@ -5,11 +5,17 @@
   "description": "ecommerce site",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js"
+    "start": "nodemon backend/server.js",
+    "server": "nodemon backend/server.js",
+    "client": "cd frontend && npm run dev",
+    "devs": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Mohammad Harish",
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }
