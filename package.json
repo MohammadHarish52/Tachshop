@@ -5,7 +5,7 @@
   "description": "ecommerce site",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js",
+    "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "cd frontend && npm run dev",
     "devs": "concurrently \"npm run server\" \"npm run client\""
@@ -13,8 +13,11 @@
   "author": "Mohammad Harish",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.3"
   },
   "devDependencies": {
     "concurrently": "^8.2.2",

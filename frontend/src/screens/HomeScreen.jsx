@@ -8,11 +8,17 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get("/api/products");
-      setProducts(data);
+      try {
+        const { data } = await axios.get(`http://localhost:5000/api/products`);
+        console.log("Data received from API:", data); // Check the structure of data
+        setProducts(data); // Assuming data is an array of products
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
     };
     fetchProducts();
   }, []);
+
   return (
     <>
       <h1>Latest Products</h1>

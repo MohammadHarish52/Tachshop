@@ -8,13 +8,25 @@ import {
   Button,
   ListGroupItem,
 } from "react-bootstrap";
-import { products } from "../products.js";
+
 import Rating from "../components/Rating.jsx";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ProductScreen = () => {
+  const [product, setProduct] = useState({});
+
   const { id: productId } = useParams();
-  const product = products.find((p) => p._id === productId);
-  console.log(product);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/products/${productId}`
+      );
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [productId]);
 
   return (
     <>
