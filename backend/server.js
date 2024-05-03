@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 dotenv.config();
 
 import productRoutes from "./routes/productRoutes.js";
+import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const Port = process.env.PORT;
 
@@ -20,5 +21,7 @@ app.get("/", (req, res) => {
 // pass this to the ProductRoutes file as the endpoint
 
 app.use("/api/products", productRoutes);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(Port, () => console.log(`Server started on port ${Port}`));
