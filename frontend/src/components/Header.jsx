@@ -6,7 +6,17 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+
+  console.log("cartItems:", cartItems);
+  let totalItems = 0;
+  // Iterate over cartItems and sum up the quantities
+  cartItems.forEach((item) => {
+    // Check if the quantity property is a number before adding it to the total
+    if (typeof item.qty === "number" && !isNaN(item.qty)) {
+      totalItems += item.qty;
+    }
+  });
+  console.log("totalItems:", totalItems);
 
   return (
     <header>
@@ -24,17 +34,18 @@ const Header = () => {
               <LinkContainer to="/cart">
                 <Nav.Link href="/cart">
                   <FaShoppingCart /> Cart
-                  {cartItems.length > 0 && (
-                    <Badge
-                      pill
-                      bg="success"
-                      style={{
-                        marginLeft: "5px",
-                      }}
-                    >
-                      {cartItems.reduce((a, c) => a + c.qty, 0)}
-                    </Badge>
-                  )}
+                  {cartItems &&
+                    cartItems.length > 0 && ( // Check if cartItems is not undefined
+                      <Badge
+                        pill
+                        bg="success"
+                        style={{
+                          marginLeft: "5px",
+                        }}
+                      >
+                        {totalItems}
+                      </Badge>
+                    )}
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/login">
