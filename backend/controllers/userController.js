@@ -7,34 +7,32 @@ import jwt from "jsonwebtoken";
 // @access public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  // check if user exists and the password
   const user = await User.findOne({ email });
-  console.log(user);
-  res.send(user);
 
-  //   if (user && (await user.matchPassword(password))) {
-  //     const token = jwt.sign({ userId: user._Id }, process.env.JWT_SECRET, {
-  //       expiresIn: "30d",
-  //     });
+  if (user && (await user.matchPassword(password))) {
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "30d",
+    });
 
-  //     //set jwt as http only cookie
-  //     res.cookie("jwt", token, {
-  //       httpOnly: true,
-  //       secure: process.env.NODE_ENV !== "development",
-  //       sameSize: "strict",
-  //       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-  //     });
+    // set jwt as http only cookie
+    res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      sameSize: "strict",
+      maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    });
 
-  //     res.json({
-  //       _id: user._id,
-  //       name: user.name,
-  //       email: user.email,
-  //       isAdmin: user.isAdmin,
-  //     });
-  //   } else {
-  //     res.status(401);
-  //     throw new Error("Invalid credentials");
-  //   }
+    res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid Email or Password");
+  }
 });
 
 // @desc register User

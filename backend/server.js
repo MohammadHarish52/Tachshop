@@ -2,6 +2,7 @@ import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./config/db.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 import productRoutes from "./routes/productRoutes.js";
@@ -17,7 +18,9 @@ const app = express();
 app.use(express.json());
 // enable CORS
 app.use(cors());
-app.use(urlencoded({ extended: true }));
+// parse cookies
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
   res.send("API is running");
