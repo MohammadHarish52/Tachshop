@@ -21,6 +21,7 @@ const LoginScreen = () => {
 
   const { search } = useLocation();
   // Redirecting the user if already
+  // url me se string nikalna
   const sp = new URLSearchParams(search);
   const redirect = sp.get("redirect") || "/";
 
