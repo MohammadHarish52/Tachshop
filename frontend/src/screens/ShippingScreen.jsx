@@ -3,7 +3,8 @@ import FormContainer from "../components/FormContainer";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import saveShippingAddress from "../slices/cartSlice.js";
+import { saveShippingAddress } from "../slices/cartSlice.js";
+import CheckOutSteps from "../components/CheckOutSteps.jsx";
 
 const ShippingScreen = () => {
   const { shippingAddress } = useSelector((state) => state.cart);
@@ -32,6 +33,7 @@ const ShippingScreen = () => {
   };
   return (
     <FormContainer>
+      <CheckOutSteps step1 />
       <h1>Shipping Screen</h1>
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="address" className="my-2">
