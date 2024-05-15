@@ -54,6 +54,7 @@ export const {
   removeFromCart,
   saveShippingAddress,
   savePaymentMethod,
+  clearCartitems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
