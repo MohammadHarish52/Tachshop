@@ -18,7 +18,12 @@ const app = express();
 // body parser
 app.use(express.json());
 // enable CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // replace with your frontend domain
+    credentials: true,
+  })
+);
 // parse cookies
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));

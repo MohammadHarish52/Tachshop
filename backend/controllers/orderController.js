@@ -1,5 +1,5 @@
 import asyncHandler from "../middleware/asyncHandler.js";
-import order from "../models/orderModels.js";
+
 import Order from "../models/orderModels.js";
 
 // @desc   create new order
@@ -10,6 +10,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     orderItems,
     shippingAddress,
     itemsPrice,
+    paymentMethod,
     taxPrice,
     shippingPrice,
     totalPrice,
@@ -32,9 +33,13 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
     });
-    const createOrder = await order.save();
-    //res.json(createOrder);
-    res.status(201).json(createOrder);
+    try {
+      const createdOrder = await order.save();
+      res.status(201).json(createdOrder);
+    } catch (error) {
+      console.error(error); // Log the error for debugging
+      res.status(500).json({ message: "Error creating order" });
+    }
   }
 });
 // @desc  get all orders
@@ -58,8 +63,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 const getMyOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findOne(req.params.id).populate(
     "user",
-    "name",
-    "email"
+    "name email"
   );
   if (order) {
     res.json(order);
