@@ -25,7 +25,6 @@ const Header = () => {
     }
   };
 
-  console.log("cartItems:", cartItems);
   let totalItems = 0;
   // Iterate over cartItems and sum up the quantities
   cartItems.forEach((item) => {
@@ -34,7 +33,6 @@ const Header = () => {
       totalItems += item.qty;
     }
   });
-  console.log("totalItems:", totalItems);
 
   return (
     <header>

@@ -5,7 +5,7 @@ import CheckOutSteps from "../components/CheckOutSteps";
 import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
-import Message from "../components/Message";
+import Message from "../components/Message.jsx";
 import Loader from "../components/Loader.jsx";
 import { clearCartitems } from "../slices/cartSlice.js";
 
@@ -35,7 +35,7 @@ const PlaceOrderScreen = () => {
         shippingPrice: cart.shippingPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
-      dispatch(clearCartitems);
+      dispatch(clearCartitems());
       navigate(`/order/${res._id}`);
     } catch (error) {
       toast.error(error);
@@ -120,16 +120,14 @@ const PlaceOrderScreen = () => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {error && <Message variant="danger">{error}</Message>}
+                {/* {error && <Message variant="danger">{error}</Message>} */}
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
                   type="button"
                   className="btn-block"
                   disabled={cart.cartItems.length === 0}
-                  onClick={() => {
-                    placeOrderHandler;
-                  }}
+                  onClick={placeOrderHandler}
                 >
                   Place Order
                 </Button>

@@ -8,12 +8,16 @@ const protect = asyncHandler(async (req, res, next) => {
 
   // read the jwt from the cookie
   token = req.cookies.jwt;
+  console.log(res.cookies);
+  console.log("Token:", token); // Add this line to log the token
   if (token) {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = await User.findById(decoded.userId).select("-password");
+      console.log("user authenticated", req.user);
       next();
     } catch (error) {
+      console.log("token error", error);
       res.status(401);
       throw new Error("Not logged in or token is expired!");
     }
