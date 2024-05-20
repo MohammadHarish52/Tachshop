@@ -57,19 +57,27 @@ const getMyOrders = asyncHandler(async (req, res) => {
   res.json(orders);
 });
 
-// @desc   ge order by id
+// @desc   get order by id
 // @route  GET /api/orders/:id
 // @access Private
 const getMyOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findOne(req.params.id).populate(
-    "user",
-    "name email"
-  );
-  if (order) {
-    res.json(order);
-  } else {
-    res.status(404);
-    throw new Error("Order not found");
+  const orderId = req.params.id;
+  console.log(`Order ID received: ${orderId}`); // Debugging line
+
+  try {
+    const order = await Order.findOne({ _id: orderId }).populate(
+      "user",
+      "name email"
+    );
+    if (order) {
+      res.json(order);
+    } else {
+      res.status(404);
+      throw new Error("Order not found");
+    }
+  } catch (error) {
+    console.error(error); // Log the error for debugging
+    res.status(500).json({ message: "Error fetching order" });
   }
 });
 
@@ -77,7 +85,22 @@ const getMyOrderById = asyncHandler(async (req, res) => {
 // @route  PUT /api/orders/:id/pay
 // @access Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  res.send("update order by id");
+  const order = await Order.findById(req.params.id);
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    };
+    const updatedOrder = await order.save();
+    res.json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
 });
 
 // @desc  update order to delivered
