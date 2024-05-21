@@ -1,7 +1,7 @@
 import Loader from "../../components/Loader.jsx";
 import Message from "../../components/Message.jsx";
 import { Button, Col, Row, Table } from "react-bootstrap";
-import { FaEdit, FaTimes, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import {
