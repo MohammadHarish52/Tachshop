@@ -45,6 +45,29 @@ const ProductEditScreen = () => {
     }
   }, [product]);
 
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    const updatedProduct = {
+      _id: productId,
+      name,
+      price,
+      image,
+      brand,
+      category,
+      countInStock,
+      description,
+    };
+    const result = await updateProduct(updatedProduct);
+    console.log(result);
+    if (result.error) {
+      toast.error(result.error);
+      console.log(result.error);
+    } else {
+      toast.success("Product Updated Successfully");
+      navigate("/admin/productlist");
+    }
+  };
+
   return (
     <>
       <Link to="/admin/products" className="btn btn-light my-3">
@@ -58,7 +81,7 @@ const ProductEditScreen = () => {
         ) : error ? (
           <Message variant="danger">{error?.message || error.message}</Message>
         ) : (
-          <Form>
+          <Form onSubmit={submitHandler}>
             <Form.Group controlId="name" className="my-2">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -83,7 +106,7 @@ const ProductEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter Brand"
-                value={name}
+                value={brand}
                 onChange={(e) => setBrand(e.target.value)}
               ></Form.Control>
             </Form.Group>
@@ -92,16 +115,16 @@ const ProductEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter Category"
-                value={name}
+                value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId="name" className="my-2">
               <Form.Label>Count In Stock</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 placeholder="Enter the Stock"
-                value={name}
+                value={countInStock}
                 onChange={(e) => setCountInStock(e.target.value)}
               ></Form.Control>
             </Form.Group>
@@ -110,10 +133,13 @@ const ProductEditScreen = () => {
               <Form.Control
                 type="text"
                 placeholder="Enter Description"
-                value={name}
+                value={description}
                 onChange={(e) => setDescription(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            <Button type="submit" variant="primary" className="my-2">
+              Update Product
+            </Button>
           </Form>
         )}
       </FormContainer>
