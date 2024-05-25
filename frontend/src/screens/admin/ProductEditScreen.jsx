@@ -71,9 +71,9 @@ const ProductEditScreen = () => {
   };
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file, file.name);
+    const file = e.target.files[0]; // gets the first item uploaded
+    formData.append("image", file);
     try {
       const res = await uploadProductImage(formData).unwrap();
       toast.success(res.message);
