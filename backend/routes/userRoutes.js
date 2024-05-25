@@ -21,7 +21,7 @@ router
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 router
-  .route(":id")
+  .route("/:id")
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
