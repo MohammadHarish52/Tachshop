@@ -53,8 +53,17 @@ const ProductScreen = () => {
     navigate("/cart");
   };
 
-  const submitHandler = () => {
-    console.log("ji");
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await createReview({ productId, rating, comment }).unwrap();
+      refetch();
+      toast.success("Review submitted successfully");
+      setRating(0);
+      setComment("");
+    } catch (error) {
+      toast.error(error?.data?.message || error.message);
+    }
   };
 
   return (
@@ -161,7 +170,7 @@ const ProductScreen = () => {
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
                     <strong>{review.name}</strong>
-                    <strong>{review.rating}</strong>
+                    <Rating value={review.rating} />
                     <p>{review.createdAt.substring(0, 10)}</p>
                     <p>{review.comment}</p>
                   </ListGroup.Item>
