@@ -72,14 +72,17 @@ const ProductEditScreen = () => {
 
   const uploadFileHandler = async (e) => {
     const formData = new FormData();
-    const file = e.target.files[0]; // gets the first item uploaded
+    const file = e.target.files[0];
     formData.append("image", file);
     try {
       const res = await uploadProductImage(formData).unwrap();
+      console.log(res); // Log the server response
       toast.success(res.message);
-      setImage(res.image);
+      const backendUrl = "http://localhost:5000"; // Update this to your backend URL
+      setImage(`${backendUrl}${res.image}`);
+      console.log(res.image); // Log the image URL being set
     } catch (error) {
-      toast.error(error?.data?.message);
+      toast.error(error?.data?.message || error.message);
     }
   };
 
@@ -124,6 +127,17 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
+              {image && (
+                <img
+                  src={image}
+                  alt="Product"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    marginTop: "10px",
+                  }}
+                />
+              )}
               <Form.Control
                 type="file"
                 label="Choose file"
