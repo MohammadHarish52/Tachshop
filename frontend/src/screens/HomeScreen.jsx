@@ -1,14 +1,27 @@
 import { Row, Col } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 import Product from "../components/Product";
 import { useGetProductsQuery } from "../slices/productsApiSlice.js";
 import Loader from "../components/Loader.jsx";
 import Message from "../components/Message.jsx";
+import Paginate from "../components/Paginate.jsx";
+import ProductCarousal from "../components/ProductCarousal.jsx";
 
 const HomeScreen = () => {
-  console.log(useGetProductsQuery);
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { pageNumber, keyword } = useParams();
+  const { data, isLoading, error } = useGetProductsQuery({
+    keyword,
+    pageNumber,
+  });
   return (
     <>
+      {keyword ? (
+        <Link to="/" className="btn btn-light my-2">
+          Go Back
+        </Link>
+      ) : (
+        <ProductCarousal />
+      )}
       {isLoading ? (
         <Loader />
       ) : error ? (
@@ -19,12 +32,17 @@ const HomeScreen = () => {
         <>
           <h1>Latest Products</h1>
           <Row>
-            {products.map((product) => (
+            {data.products.map((product) => (
               <Col sm={12} lg={4} xl={3} key={product._id}>
                 <Product product={product} />
               </Col>
             ))}
           </Row>
+          <Paginate
+            pages={data.pages}
+            page={data.page}
+            keyword={keyword ? keyword : ""}
+          />
         </>
       )}
     </>

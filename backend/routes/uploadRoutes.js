@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 function checkfileType(file, cb) {
-  const filetypes = /jpeg|jpg|png/;
+  const filetypes = /jpg|jpeg|png/;
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = filetypes.test(file.mimetype);
   if (extname && mimetype) {
@@ -31,9 +31,10 @@ const upload = multer({
 });
 
 router.post("/", upload.single("image"), (req, res) => {
+  const imagePath = req.file.path.replace(/\\/g, "/"); // Replace backslashes with forward slashes
   res.send({
     message: "Image uploaded",
-    image: `/${req.file.path}`,
+    image: `/${imagePath}`,
   });
 });
 

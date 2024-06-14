@@ -10,7 +10,8 @@
     "client": "cd frontend && npm run dev",
     "data:import": "node backend/seeder.js",
     "data:destroy": "node backend/seeder.js -d",
-    "devs": "concurrently \"npm run server\" \"npm run client\""
+    "devs": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "npm install && cd frontend && npm install && npm run build"
   },
   "author": "Mohammad Harish",
   "license": "ISC",
