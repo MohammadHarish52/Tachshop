@@ -74,13 +74,21 @@ const ProductEditScreen = () => {
     const formData = new FormData();
     const file = e.target.files[0];
     formData.append("image", file);
+
+    let backendUrl = ""; // Declare backendUrl outside the if-else block
+
+    if (process.env.NODE_ENV === "development") {
+      backendUrl = "http://localhost:5000"; // Update this to your backend URL
+    }
+
     try {
       const res = await uploadProductImage(formData).unwrap();
       console.log(res); // Log the server response
       toast.success(res.message);
-      const backendUrl = ""; // Update this to your backend URL
+
+      // Set the image URL using the resolved backendUrl
       setImage(`${backendUrl}${res.image}`);
-      console.log(res.image); // Log the image URL being set
+      console.log(`${backendUrl}${res.image}`); // Log the image URL being set
     } catch (error) {
       toast.error(error?.data?.message || error.message);
     }
