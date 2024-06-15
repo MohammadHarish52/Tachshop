@@ -150,7 +150,7 @@ export const products = [
   },
   {
     name: "Samsung Galaxy S21 128GB",
-    image: "/images/galaxy.webp",
+    image: "/images/galaxy.jpeg",
     description:
       "Samsung Galaxy S21 with 128GB storage, a 6.2-inch display, and a triple camera setup.",
     brand: "Samsung",
