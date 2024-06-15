@@ -78,7 +78,7 @@ const ProductEditScreen = () => {
       const res = await uploadProductImage(formData).unwrap();
       console.log(res); // Log the server response
       toast.success(res.message);
-      const backendUrl = "http://localhost:5000"; // Update this to your backend URL
+      const backendUrl = ""; // Update this to your backend URL
       setImage(`${backendUrl}${res.image}`);
       console.log(res.image); // Log the image URL being set
     } catch (error) {
