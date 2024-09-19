@@ -1,0 +1,21 @@
+name: Keep Backend Active
+
+on:
+  schedule:
+    - cron: "*/10 * * * *" # Runs every 10 minutes
+
+jobs:
+  ping_api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GET request to Backend
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.REACT_APP_BASE_URL }}/api/ping)
+          if [ $response -eq 200 ]; then
+            echo "Ping successful"
+          else
+            echo "Ping failed with status code $response"
+            exit 1
+          fi
+        env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
